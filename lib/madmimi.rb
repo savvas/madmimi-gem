@@ -48,6 +48,7 @@ class MadMimi
   
   PROMOTIONS_PATH = '/promotions.xml'
   PROMOTION_SAVE_PATH = '/promotions/save'
+  PROMOTION_SEARCH_PATH = '/promotions/search.xml?query=%promotion_search_query%'
   
   MAILING_STATS_PATH = '/promotions/%promotion_id%/mailings/%mailing_id%.xml'
   
@@ -132,6 +133,11 @@ class MadMimi
   # Promotions
   def promotions
     request = do_request(PROMOTIONS_PATH, :get)
+    Crack::XML.parse(request)
+  end
+  
+  def promotions_search(promotion_search_query)
+    request = do_request(PROMOTION_SEARCH_PATH.gsub('%promotion_search_query%', promotion_search_query), :get)
     Crack::XML.parse(request)
   end
   
